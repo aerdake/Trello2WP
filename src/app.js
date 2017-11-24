@@ -12,7 +12,6 @@ app.use(body());
 // Ref https://github.com/alexmingoia/koa-router
 app.use(router.routes());
 app.use(router.allowedMethods());
-
 app.listen(config.get('listen_port') || 8001);
 
 // Register webhook

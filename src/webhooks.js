@@ -37,7 +37,7 @@ export default class WebHooks{
         };
         try {
             let body = await rp(options);
-            console.log(body);
+            // console.log(body);
             return await body;
         } catch (error) {
             console.log(error);
@@ -53,7 +53,7 @@ export default class WebHooks{
         };
         try {
             let body = await rp(options);
-            console.log(body);
+            // console.log(body);
             return await body;
         } catch (error) {
             console.log(error);
@@ -96,7 +96,7 @@ export default class WebHooks{
         };
         try {
             let body = await rp(options);
-            console.log(body);
+            // console.log(body);
             return await body;
         } catch (error) {
             console.log(error);

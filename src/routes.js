@@ -6,6 +6,8 @@ const router = new Router();
 import trello from './trello';
 import wordpress from './wordpress';
 
+import text from './text';
+
 // Ref https://developers.trello.com/v1.0/page/webhooks#section-webhook-source
 const ipaddrs = _.map([
     '::1', // DEBUG for ngrok
@@ -30,11 +32,30 @@ router.post('/trellocallback', async ctx => {
         ctx.status = 404;
         return;
     }
-
     let action = await trello.parseHookEvent(ctx.request.fields);
+    //init all card
+    // await wordpress.updateAllPost();
     if(action != null){
         if(action.type == 'createCard'){
-            await wordpress.createPost(action.data);
+            let listId = ctx.request.fields.action.data.list.id;
+            await wordpress.createPost(action.data,listId);
+            // await wordpress.findAllPost();
+            // console.log(wordpress.findAllPost());
+            // await text.text(action.data,listId);
+        }
+        if(action.type == 'updateCard'){
+            await wordpress.updatePost(action.data);
+           
+        }
+        if(action.type == 'deleteCard'){
+            await wordpress.deleteCardPost(action.data);
+           
+        }
+        if(action.type == 'addLabelToCard'){
+            await wordpress.addLabelToCardPost(action.data);
+        }
+        if(action.type == 'removeLabelFromCard'){
+            await wordpress.removeLabelFromCardPost(action.data);
         }
         ctx.status = 200;
     }
